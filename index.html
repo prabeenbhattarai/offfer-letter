@@ -26,6 +26,12 @@
         button:hover {
             background-color: #45a049;
         }
+
+        #offerLetter {
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -57,9 +63,12 @@
             const offerLetterContent = `
                 <h2>Offer Letter</h2>
                 <p>Date: ${new Date().toLocaleDateString()}</p>
-                <p>Client Name: ${clientName}</p>
-                <p>Date of Joining: ${dateOfJoining}</p>
-                <p>Passport Number: ${passportNumber}</p>
+                <p>Dear ${clientName},</p>
+                <p>We are pleased to offer you a position at our company. Your experience and skills make you a valuable asset to our team.</p>
+                <p>Your joining date is ${dateOfJoining}.</p>
+                <p>Please provide your passport details at the earliest convenience. Your passport number is ${passportNumber}.</p>
+                <p>Should you accept this offer, please sign and return a copy of this letter by the date mentioned.</p>
+                <p>Regards,<br> [Your Company Name]</p>
             `;
 
             document.getElementById("offerLetter").innerHTML = offerLetterContent;
@@ -68,8 +77,11 @@
             downloadButton.style.display = "block";
             downloadButton.addEventListener("click", () => {
                 const pdf = new jsPDF();
-                pdf.text(offerLetterContent, 10, 10);
-                pdf.save(`${clientName}.pdf`);
+                pdf.html(document.getElementById("offerLetter"), {
+                    callback: function (pdf) {
+                        pdf.save(`${clientName}_Offer_Letter.pdf`);
+                    }
+                });
             });
         }
     </script>
