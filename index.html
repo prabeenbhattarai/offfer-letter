@@ -111,39 +111,35 @@
         <button id="downloadButton">Download PDF</button>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
         function generateOfferLetter() {
             const clientName = document.getElementById("clientName").value;
             const dateOfJoining = document.getElementById("dateOfJoining").value;
             const passportNumber = document.getElementById("passportNumber").value;
 
-            const offerLetterContent = `
-                <h2>Offer Letter</h2>
-                <p>Date: ${new Date().toLocaleDateString()}</p>
-                <p>Dear ${clientName},</p>
-                <p>We are pleased to offer you a position at our company. Your experience and skills make you a valuable asset to our team.</p>
-                <p>Your joining date is ${dateOfJoining}.</p>
-                <p>Please provide your passport details at the earliest convenience. Your passport number is ${passportNumber}.</p>
-                <p>Should you accept this offer, please sign and return a copy of this letter by the date mentioned.</p>
-                <p>Regards,<br> [Your Company Name]</p>
-            `;
+            const pdf = new jsPDF();
 
-            document.getElementById("offerLetter").innerHTML = offerLetterContent;
+            pdf.setFontSize(20);
+            pdf.text("Offer Letter", 10, 20);
 
-            const downloadButton = document.getElementById("downloadButton");
-            downloadButton.style.display = "block";
-            downloadButton.addEventListener("click", () => {
-                const pdfContent = document.getElementById("offerLetter").innerHTML;
-                const blob = new Blob([pdfContent], { type: "application/pdf" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = `${clientName}_Offer_Letter.pdf`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            });
+            pdf.setFontSize(12);
+            pdf.text(`Date: ${new Date().toLocaleDateString()}`, 10, 30);
+            pdf.text(`Dear ${clientName},`, 10, 40);
+            pdf.text("We are pleased to offer you a position at our company. Your experience and skills make you a valuable asset to our team.", 10, 50);
+            pdf.text(`Your joining date is ${dateOfJoining}.`, 10, 60);
+            pdf.text(`Please provide your passport details at the earliest convenience. Your passport number is ${passportNumber}.`, 10, 70);
+            pdf.text("Should you accept this offer, please sign and return a copy of this letter by the date mentioned.", 10, 80);
+            pdf.text("Regards,", 10, 90);
+            pdf.text("[Your Company Name]", 10, 100);
+
+            const url = pdf.output('bloburl');
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `${clientName}_Offer_Letter.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
     </script>
 </body>
