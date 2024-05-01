@@ -7,20 +7,58 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
         }
 
         form {
-            margin-bottom: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
 
         button {
-            padding: 10px 20px;
+            display: block;
+            width: 100%;
+            padding: 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
 
         button:hover {
@@ -31,27 +69,47 @@
             margin-top: 30px;
             border: 1px solid #ccc;
             padding: 20px;
+            background-color: #fff;
+        }
+
+        #downloadButton {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #downloadButton:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>Offer Letter Generator</h1>
-    <form id="offerForm">
-        <label for="clientName">Client Name:</label>
-        <input type="text" id="clientName" required><br><br>
+    <div class="container">
+        <h1>Offer Letter Generator</h1>
+        <form id="offerForm">
+            <label for="clientName">Client Name:</label>
+            <input type="text" id="clientName" required>
 
-        <label for="dateOfJoining">Date of Joining:</label>
-        <input type="date" id="dateOfJoining" required><br><br>
+            <label for="dateOfJoining">Date of Joining:</label>
+            <input type="date" id="dateOfJoining" required>
 
-        <label for="passportNumber">Passport Number:</label>
-        <input type="text" id="passportNumber" required><br><br>
+            <label for="passportNumber">Passport Number:</label>
+            <input type="text" id="passportNumber" required>
 
-        <button type="button" onclick="generateOfferLetter()">Generate Letter</button>
-    </form>
+            <button type="button" onclick="generateOfferLetter()">Generate Letter</button>
+        </form>
 
-    <div id="offerLetter"></div>
+        <div id="offerLetter"></div>
 
-    <button id="downloadButton" style="display: none;">Download PDF</button>
+        <button id="downloadButton">Download PDF</button>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
