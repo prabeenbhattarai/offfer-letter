@@ -111,7 +111,6 @@
         <button id="downloadButton">Download PDF</button>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
         function generateOfferLetter() {
             const clientName = document.getElementById("clientName").value;
@@ -134,12 +133,16 @@
             const downloadButton = document.getElementById("downloadButton");
             downloadButton.style.display = "block";
             downloadButton.addEventListener("click", () => {
-                const pdf = new jsPDF();
-                pdf.html(document.getElementById("offerLetter"), {
-                    callback: function (pdf) {
-                        pdf.save(`${clientName}_Offer_Letter.pdf`);
-                    }
-                });
+                const pdfContent = document.getElementById("offerLetter").innerHTML;
+                const blob = new Blob([pdfContent], { type: "application/pdf" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `${clientName}_Offer_Letter.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
             });
         }
     </script>
